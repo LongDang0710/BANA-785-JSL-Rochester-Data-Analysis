@@ -31,3 +31,10 @@
     - Done & evaluated.
         - Features: monthly ADL, Meal %, Fluid ml, PRN/Scheduled distinct docs, Oral-days; optional lag feature supported.
         - Rolling, time-aware CV reports R²/MAE; latest-month next-month predictions saved to Reports/top20_predicted_workload_next_month.csv, with feature importance in Reports/figs/workload_feature_importance.png.
+
+## Why ADL/Fluid change models are not done/finished. 
+- I attempted multiple label definitions and robust parsing; at monthly granularity (Nov 2024 → May 2025) I still see:
+    - Fluid decline labels: 0 positives under reasonable thresholds—even “any month-to-month drop” yields near-zero positives after coverage gating. Interpretation: fluid totals are often flat/zero across adjacent months for many clients in this slice; the short window + missingness means no learnable change signal monthly.
+    - ADL-Eating: monthly adl_eating_m is largely NULL despite numeric/text fallbacks. Interpretation: ADL self-performance entries were either sparse in this window or logged in ways that don’t aggregate cleanly at month level without more coverage.
+- Decision: Park ADL/Fluid change models at monthly grain to avoid over-fitting/false conclusions.
+- Path forward: try weekly aggregation or extend the time window—both increase time slices and observed movement.
