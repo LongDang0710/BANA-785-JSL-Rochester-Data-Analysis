@@ -21,13 +21,13 @@
     - Step 2 (Per-client formatting): Done.
         - vw_client_top_questions_latest and Reports/client_topN_questions_latest.csv list each client’s Top-N recorded, high-contribution questions for the latest month.
 2. Plan 2 — “Create an aggregated ACCUITY score”
-Acuity Index: Done.
-Z-score components (oriented so higher = worse): ADL-Eating (worse↑), Meal % eaten (better↓), Fluid ml (better↓), PRN events (worse↑), Scheduled events (worse↑), Oral-days rate (better↓).
-Weighted sum (default weights: ADL .35, Fluid .20, Meal .15, PRN .15, Scheduled .10, Oral .05) → acuity_monthly.
-Risk bands by month (vw_acuity_scored), with exports:
-Reports/acuity_latest_top25.csv (latest month)
-Reports/acuity_trend_last4.csv (last 4 months per client)
-Model 1 — Workload (baseline intervention prediction)
-Done & evaluated.
-Features: monthly ADL, Meal %, Fluid ml, PRN/Scheduled distinct docs, Oral-days; optional lag feature supported.
-Rolling, time-aware CV reports R²/MAE; latest-month next-month predictions saved to Reports/top20_predicted_workload_next_month.csv, with feature importance in Reports/figs/workload_feature_importance.png.
+    - Acuity Index: Done.
+        - Z-score components (oriented so higher = worse): ADL-Eating (worse↑), Meal % eaten (better↓), Fluid ml (better↓), PRN events (worse↑), Scheduled events (worse↑), Oral-days rate (better↓).
+        - Weighted sum (default weights: ADL .35, Fluid .20, Meal .15, PRN .15, Scheduled .10, Oral .05) → acuity_monthly.
+        - Risk bands by month (vw_acuity_scored), with exports:
+            - Reports/acuity_latest_top25.csv (latest month)
+            - Reports/acuity_trend_last4.csv (last 4 months per client)
+3. Model 1 — Workload (baseline intervention prediction)
+    - Done & evaluated.
+        - Features: monthly ADL, Meal %, Fluid ml, PRN/Scheduled distinct docs, Oral-days; optional lag feature supported.
+        - Rolling, time-aware CV reports R²/MAE; latest-month next-month predictions saved to Reports/top20_predicted_workload_next_month.csv, with feature importance in Reports/figs/workload_feature_importance.png.
