@@ -16,7 +16,7 @@
 ## What’s implemented vs the plan  
 1. Plan 1 — “Which questions are useful?”  
     - Step 1 (Identify useful questions): Done.
-    - monthly_question_activity, vw_question_coverage, vw_question_coverage_monthly quantify coverage.
+        - monthly_question_activity, vw_question_coverage, vw_question_coverage_monthly quantify coverage.
 Permutation importance on coverage Top-K questions ranks predictive contribution to the workload model; results saved as Reports/question_contribution_permutation*.csv.
 Step 2 (Per-client formatting): Done.
 vw_client_top_questions_latest and Reports/client_topN_questions_latest.csv list each client’s Top-N recorded, high-contribution questions for the latest month.
