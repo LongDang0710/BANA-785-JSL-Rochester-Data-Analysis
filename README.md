@@ -38,3 +38,37 @@
     - ADL-Eating: monthly adl_eating_m is largely NULL despite numeric/text fallbacks. Interpretation: ADL self-performance entries were either sparse in this window or logged in ways that don’t aggregate cleanly at month level without more coverage.
 - Decision: Park ADL/Fluid change models at monthly grain to avoid over-fitting/false conclusions.
 - Path forward: try weekly aggregation or extend the time window—both increase time slices and observed movement.
+
+## Data & modeling guardrails (what makes this defensible)  
+1. Distinct-doc counting: workload uses COUNT(DISTINCT doc_id) to avoid response-level inflation.
+2. Coverage controls: monthly features enforce day coverage; fluids COALESCE to avoid NULL deltas.
+3. Parsing hardening: numeric regex for ml/cc; ADL string mapping + numeric fallback; route synonyms (PO/by mouth/PEG/NG/IV).
+4. Time-aware eval: rolling CV; no leakage (month t features → month t+1 labels).
+5. No PHI: only pseudonymous client_id; outputs are aggregate/risk lists.
+
+## Clarifications requested (professor/teammates) for future-proofing
+1. Label definitions (clinical):
+    - Fluid decline: confirm threshold (any drop vs ≥10%/≥20%) and minimum oral-days per month; confirm whether non-oral intake should adjust labels.
+    - ADL-Eating: confirm the authoritative field(s) and acceptable coverage threshold for aggregating to month/week.
+2. Aggregation level:
+    - Approve weekly rollups for ADL/Fluid change models if monthly remains too sparse.
+3. Question dictionary stability:
+    - Confirm that std_question_id mapping is stable across drops or provide a canonical dictionary version for long-term use.
+4. Acuity weighting:
+    - Keep current weights or switch to data-driven (normalize SHAP means from the workload model).
+    - Optionally provide a Top-3 signal variant if a simpler index is desired.
+5. Chronic conditions:
+    - Approve inclusion (e.g., dementia/diabetes/CHF flags) and source table/fields for a richer feature set.
+6. Fairness & slices:
+    - Specify any compliance slices (e.g., by age band, gender) for workload performance reporting.
+7. Operational deliverables:
+    - Confirm the Top-N size for per-client “useful questions” and whether a coverage-rate floor (e.g., ≥20%) should be applied.
+    - Approve the risk list cadence (monthly) and artifacts the care team wants (CSV vs dashboard).
+8. Access/governance:
+    - Confirm where Reports/ artifacts should be shared and any naming/versioning requirements.
+9. Future work (optional):
+    - LangChain/SQL agent wired to governed views.
+    - Deployment target (schedule, storage location, handoff format).
+
+## Note: 
+**_I want to acknowledge any mistakes I may have made along the way and sincerely apologize for the delay in submitting this work. I care a lot about the quality and reproducibility of our deliverables, and I’ve tried to make the pipeline transparent, well-documented, and easy to run. If anything is unclear, missing, or could be structured better, I’d truly appreciate your guidance. Please feel free to share any advice or suggestions—on methodology, data handling, evaluation, or how to present the results more effectively to the care team. I’m happy to revise quickly, iterate on the models, add diagnostics, or tailor the outputs to your preferences. Thank you for your time, patience, and direction; I’m committed to improving this work and making it as useful as possible to the project._**
