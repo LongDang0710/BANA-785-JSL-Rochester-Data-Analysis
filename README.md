@@ -1,5 +1,5 @@
 # BANA-785-JSL-Rochester-Data-Analysis
-**JSL Rochester Data Analysis — README**
+**JSL Rochester Data Analysis — README**  
 What this project does (at a glance)
 Builds a governed analytics mart in DuckDB from JSL’s Scheduled, PRN, and QShift streams (clean joins; no PHI—pseudonymous client_id only).
 Engineers standardized signals (ADL-Eating ordinal, Meal % eaten, Fluid intake ml + route, PRN/Scheduled event counts) at daily → monthly grains with coverage controls.
